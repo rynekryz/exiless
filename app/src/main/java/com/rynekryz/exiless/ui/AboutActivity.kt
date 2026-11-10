@@ -14,6 +14,7 @@ class AboutActivity : AppCompatActivity() {
         setContentView(R.layout.activity_about)
         findViewById<AppInfoLayout>(R.id.app_info).apply {
             updateStatus = AppInfoLayout.Status.NotUpdatable
+            addOptionalText(getString(R.string.about_by))
             addOptionalText(getString(R.string.about_license_line))
             addOptionalText(getString(R.string.about_disclaimer))
         }

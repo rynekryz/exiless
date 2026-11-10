@@ -39,6 +39,11 @@
     <dev.oneuiproject.oneui.preference.InsetPreferenceCategory />
 
     <PreferenceCategory android:title="@string/pref_cat_output">
+        <SwitchPreferenceCompat
+            android:defaultValue="false"
+            android:key="replace_originals"
+            android:summary="@string/pref_replace_original_summary"
+            android:title="@string/pref_replace_original" />
         <Preference
             android:key="output_folder"
             android:title="@string/pref_folder" />

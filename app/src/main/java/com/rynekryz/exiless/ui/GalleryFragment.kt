@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
@@ -33,6 +34,7 @@ class GalleryFragment : Fragment() {
     private val vm: MainViewModel by activityViewModels()
     private lateinit var settings: Settings
     private lateinit var adapter: FileAdapter
+    private lateinit var thumbnails: Thumbnails
     private var actions: MainActions? = null
 
     private val filePicker = registerForActivityResult(ActivityResultContracts.OpenMultipleDocuments()) { vm.add(it) }
@@ -55,7 +57,8 @@ class GalleryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         settings = Settings(requireContext())
-        adapter = FileAdapter(Thumbnails(requireContext(), viewLifecycleOwner.lifecycleScope, 120), vm::summary, ::showDetails)
+        thumbnails = Thumbnails(requireContext(), viewLifecycleOwner.lifecycleScope, 120)
+        adapter = FileAdapter(thumbnails, vm::summary, ::showDetails, ::showPreview)
         adapter.setViewMode(settings.viewMode)
         applyLayoutManager()
         binding.list.adapter = adapter
@@ -76,7 +79,7 @@ class GalleryFragment : Fragment() {
             applyLayoutManager()
             true
         }
-        R.id.action_add -> { actions?.addFiles(); true }
+        R.id.action_add -> { showAddOptions(); true }
         R.id.menu_save_all -> { actions?.saveAll(); true }
         R.id.menu_share_all -> { actions?.shareAll(); true }
         R.id.menu_clean_all -> { vm.cleanAll(); true }
@@ -92,10 +95,18 @@ class GalleryFragment : Fragment() {
         }
     }
 
+    private fun showAddOptions() {
+        AlertDialog.Builder(requireContext())
+            .setItems(arrayOf(getString(R.string.add_files), getString(R.string.add_folder))) { _, which ->
+                if (which == 0) actions?.addFiles() else actions?.addFolder()
+            }
+            .show()
+    }
+
     private fun render(items: List<FileItem>) {
         adapter.submitList(items)
         binding.empty.visibility = if (items.isEmpty()) View.VISIBLE else View.GONE
-        binding.emptyAdd.setOnClickListener { actions?.addFiles() }
+        binding.emptyAdd.setOnClickListener { showAddOptions() }
         val gps = items.count { it.hasGps && it.cleaned == null }
         binding.summary.text = when {
             items.isEmpty() -> null
@@ -127,6 +138,22 @@ class GalleryFragment : Fragment() {
             }
             builder.show()
         }
+    }
+
+    private fun showPreview(item: FileItem) {
+        val context = requireActivity()
+        val iv = androidx.appcompat.widget.AppCompatImageView(context)
+        iv.scaleType = ImageView.ScaleType.FIT_CENTER
+        val pad = (24 * resources.displayMetrics.density).toInt()
+        iv.setPadding(pad, pad, pad, pad)
+        thumbnails.cached(item.uri)?.let { iv.setImageBitmap(it) }
+        thumbnails.loadLarge(item) { iv.setImageBitmap(it) }
+        val dialog = AlertDialog.Builder(context).setView(iv).create()
+        iv.setOnClickListener { dialog.dismiss() }
+        dialog.setCanceledOnTouchOutside(true)
+        dialog.show()
+        dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
+        dialog.window?.setBackgroundDrawable(android.graphics.drawable.ColorDrawable(android.graphics.Color.BLACK))
     }
 
     private fun describe(item: FileItem, info: MetadataInfo): String {
@@ -176,6 +203,7 @@ class GalleryFragment : Fragment() {
 
 interface MainActions {
     fun addFiles()
+    fun addFolder()
     fun saveAll()
     fun saveOne(item: FileItem)
     fun shareAll()

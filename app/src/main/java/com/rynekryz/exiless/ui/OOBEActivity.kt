@@ -7,8 +7,10 @@ import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatButton
 import com.rynekryz.exiless.R
 import com.rynekryz.exiless.data.Settings
+import dev.oneuiproject.oneui.ktx.setOnClickListenerWithProgress
 import dev.oneuiproject.oneui.R as iconsR
 import dev.oneuiproject.oneui.widget.OnboardingTipsItemView
 
@@ -31,7 +33,8 @@ class OOBEActivity : AppCompatActivity() {
             container.addView(item, ViewGroup.LayoutParams(MATCH_PARENT, WRAP_CONTENT))
         }
 
-        findViewById<View>(R.id.oobe_continue).setOnClickListener {
+        val continueButton = findViewById<AppCompatButton>(R.id.oobe_continue)
+        continueButton.setOnClickListenerWithProgress { _, _ ->
             Settings(this).completeOobe()
             startActivity(Intent(this, MainActivity::class.java))
             finish()

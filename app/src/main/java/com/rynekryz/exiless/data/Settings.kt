@@ -26,6 +26,9 @@ class Settings(context: Context) {
 
     fun setViewMode(mode: String) = prefs.edit { putString(VIEW_MODE, mode) }
 
+    val replaceOriginals: Boolean
+        get() = prefs.getBoolean(REPLACE_ORIGINALS, false)
+
     val oobeCompleted: Boolean get() = prefs.getBoolean(OOBE_COMPLETED, false)
 
     fun completeOobe() = prefs.edit { putBoolean(OOBE_COMPLETED, true) }
@@ -80,6 +83,7 @@ class Settings(context: Context) {
         const val RESET_TIMESTAMPS = "reset_timestamps"
         const val NAME_SUFFIX = "name_suffix"
         const val OUTPUT_FOLDER = "output_folder"
+        const val REPLACE_ORIGINALS = "replace_originals"
         const val THEME = "theme"
         const val THEME_AUTO = "theme_auto"
         const val THEME_MODE = "theme_mode"

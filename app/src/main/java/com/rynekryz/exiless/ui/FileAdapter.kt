@@ -14,6 +14,7 @@ class FileAdapter(
     private val thumbnails: Thumbnails,
     private val summary: (FileItem) -> String,
     private val onClick: (FileItem) -> Unit,
+    private val onHold: (FileItem) -> Unit,
 ) : ListAdapter<FileItem, RecyclerView.ViewHolder>(Diff) {
 
     var viewMode: String = "grid"
@@ -49,12 +50,14 @@ class FileAdapter(
                 holder.binding.status.text = summary(item)
                 thumbnails.load(holder.binding.thumb, item)
                 holder.binding.root.setOnClickListener { onClick(item) }
+                holder.binding.root.setOnLongClickListener { onHold(item); true }
             }
             is ListHolder -> {
                 holder.binding.name.text = item.name
                 holder.binding.status.text = summary(item)
                 thumbnails.load(holder.binding.thumb, item)
                 holder.binding.root.setOnClickListener { onClick(item) }
+                holder.binding.root.setOnLongClickListener { onHold(item); true }
             }
         }
     }

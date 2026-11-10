@@ -7,7 +7,7 @@ plugins {
     alias(libs.plugins.android.application)
 }
 
-val appVersion = "0.0.1-alpha"
+val appVersion = "0.0.2-alpha"
 
 abstract class RenameApksTask : DefaultTask() {
     @get:InputFiles
@@ -52,7 +52,7 @@ android {
         applicationId = "com.rynekryz.exiless"
         minSdk = 26
         targetSdk = 36
-        versionCode = 1
+        versionCode = 2
         versionName = appVersion
     }
 

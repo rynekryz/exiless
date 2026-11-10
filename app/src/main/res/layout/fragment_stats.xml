@@ -59,6 +59,13 @@
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="?android:attr/textColorSecondary" />
 
+                <com.rynekryz.exiless.ui.StatBars
+                    android:id="@+id/stats_chart"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="12dp"
+                    android:visibility="gone" />
+
                 <TextView
                     android:id="@+id/stats_session_hint"
                     android:layout_width="match_parent"

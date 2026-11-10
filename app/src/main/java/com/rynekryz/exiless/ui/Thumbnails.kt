@@ -20,6 +20,8 @@ class Thumbnails(private val context: Context, private val scope: CoroutineScope
     private val cache = LruCache<Uri, Bitmap>(80)
     private val target = (context.resources.displayMetrics.density * targetDp).toInt()
 
+    fun cached(uri: Uri): Bitmap? = cache.get(uri)
+
     fun load(view: ImageView, item: FileItem) {
         view.tag = item.uri
         val cached = cache.get(item.uri)
@@ -34,12 +36,21 @@ class Thumbnails(private val context: Context, private val scope: CoroutineScope
         }
     }
 
+    fun loadLarge(item: FileItem, onReady: (Bitmap) -> Unit) {
+        val big = maxOf(context.resources.displayMetrics.widthPixels, context.resources.displayMetrics.heightPixels)
+        scope.launch {
+            val bitmap = withContext(Dispatchers.IO) { runCatching { decode(item, big) }.getOrNull() } ?: return@launch
+            onReady(bitmap)
+        }
+    }
+
     private fun show(view: ImageView, bitmap: Bitmap) {
         view.scaleType = ImageView.ScaleType.CENTER_CROP
         view.setImageBitmap(bitmap)
     }
 
-    private fun decode(item: FileItem): Bitmap? {
+    private fun decode(item: FileItem, targetPx: Int = target): Bitmap? {
+        val target = targetPx
         if (item.format?.isVideo == true) {
             val r = MediaMetadataRetriever()
             try {

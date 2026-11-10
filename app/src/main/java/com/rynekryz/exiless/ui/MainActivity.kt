@@ -46,6 +46,10 @@ class MainActivity : AppCompatActivity(), MainActions {
         }
     }
 
+    private val folderImport = registerForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri ->
+        if (uri != null) vm.addFolder(uri)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         settings = Settings(this)
@@ -111,7 +115,18 @@ class MainActivity : AppCompatActivity(), MainActions {
         }.commit()
         galleryTab = fragment == gallery
         binding.drawerLayout.setTitle(getString(R.string.app_name))
+        updateTabIcons()
         invalidateOptionsMenu()
+    }
+
+    private fun updateTabIcons() {
+        val active = if (galleryTab) 0 else 1
+        val outlines = intArrayOf(iconsR.drawable.ic_oui_image_outline, iconsR.drawable.ic_oui_clear_storage_outline)
+        val filled = intArrayOf(iconsR.drawable.ic_oui_image, iconsR.drawable.ic_oui_clear_storage)
+        for (i in 0 until binding.bottomTab.tabCount) {
+            binding.bottomTab.getTabAt(i)?.icon =
+                AppCompatResources.getDrawable(this, if (i == active) filled[i] else outlines[i])
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -141,9 +156,15 @@ class MainActivity : AppCompatActivity(), MainActions {
 
     override fun addFiles() = filePicker.launch(arrayOf("image/*", "video/*"))
 
-    override fun saveAll() = withFolder { vm.save(it) }
+    override fun addFolder() = folderImport.launch(null)
 
-    override fun saveOne(item: FileItem) = withFolder { vm.save(it, item) }
+    override fun saveAll() {
+        if (settings.replaceOriginals) vm.save(null) else withFolder { vm.save(it) }
+    }
+
+    override fun saveOne(item: FileItem) {
+        if (settings.replaceOriginals) vm.save(null, item) else withFolder { vm.save(it, item) }
+    }
 
     override fun shareAll() {
         val uris = vm.shareUris(null)

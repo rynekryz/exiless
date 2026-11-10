@@ -62,6 +62,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
             true
         }
         initThemePrefs()
+        initReplacePref()
         updateFolderSummary()
         updateStatsSummary()
     }
@@ -87,7 +88,20 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
     private fun updateFolderSummary() {
         findPreference<Preference>(Settings.OUTPUT_FOLDER)!!.summary =
-            settings.outputFolder?.let(::folderLabel) ?: getString(R.string.pref_folder_unset)
+            when {
+                findPreference<SwitchPreferenceCompat>(Settings.REPLACE_ORIGINALS)!!.isChecked ->
+                    getString(R.string.pref_folder_disabled)
+                else -> settings.outputFolder?.let(::folderLabel) ?: getString(R.string.pref_folder_unset)
+            }
+    }
+
+    private fun initReplacePref() {
+        val replace = findPreference<SwitchPreferenceCompat>(Settings.REPLACE_ORIGINALS)!!
+        findPreference<Preference>(Settings.OUTPUT_FOLDER)!!.isEnabled = !replace.isChecked
+        replace.onNewValue { on ->
+            findPreference<Preference>(Settings.OUTPUT_FOLDER)!!.isEnabled = !on
+            updateFolderSummary()
+        }
     }
 
     private fun updateStatsSummary() {

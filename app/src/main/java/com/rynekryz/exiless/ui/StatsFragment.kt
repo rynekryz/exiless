@@ -52,6 +52,18 @@ class StatsFragment : Fragment() {
         val cleaned = items.count { it.cleaned != null }
         val removable = items.filter { it.cleaned == null }.sumOf { it.removable }
         val withGps = items.count { it.hasGps && it.cleaned == null }
+        if (added == 0) {
+            binding.statsChart.visibility = View.GONE
+        } else {
+            binding.statsChart.visibility = View.VISIBLE
+            binding.statsChart.setEntries(
+                listOf(
+                    StatBars.Entry(getString(R.string.stats_chart_added), added),
+                    StatBars.Entry(getString(R.string.stats_chart_cleaned), cleaned),
+                    StatBars.Entry(getString(R.string.stats_chart_location), withGps),
+                ),
+            )
+        }
         binding.statsSession.text = getString(
             R.string.stats_session_detail,
             added,

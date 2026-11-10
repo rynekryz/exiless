@@ -3,6 +3,8 @@
     <string name="app_name">Exiless</string>
 
     <string name="add_files">Add files</string>
+    <string name="add_folder">Add folder</string>
+    <string name="add">Add</string>
     <string name="clean_all">Clean all</string>
     <string name="empty_title">No files added</string>
     <string name="empty_hint">Add photos or videos to see what they reveal and remove it. Everything stays on your device.</string>
@@ -26,6 +28,9 @@
     <string name="oobe_tip3_summary">Clean many files at once, save to any folder or share the cleaned copies directly from any app.</string>
 
     <string name="stats_total_title">Cleaned so far</string>
+    <string name="stats_chart_added">Added</string>
+    <string name="stats_chart_cleaned">Cleaned</string>
+    <string name="stats_chart_location">With location</string>
     <string name="stats_total_detail">%1$d files cleaned · %2$s of hidden data removed · %3$d contained location data</string>
     <string name="stats_session_title">Current session</string>
     <string name="stats_session_detail">%1$d files added · %2$d cleaned · %3$s of metadata found · %4$d with location</string>
@@ -60,11 +65,15 @@
 
     <string name="msg_cleaned">Cleaned %1$d file(s)</string>
     <string name="msg_saved">Saved %1$d file(s)</string>
+    <string name="msg_replaced">Replaced %1$d file(s)</string>
     <string name="msg_save_failed">Could not save %1$d file(s)</string>
+    <string name="msg_replace_failed">Could not replace %1$d file(s)</string>
     <string name="msg_nothing_clean">Nothing to clean yet</string>
     <string name="msg_nothing_save">Clean files first</string>
     <string name="msg_pick_folder">Choose where cleaned files are saved</string>
     <string name="msg_no_map_app">No map app found</string>
+    <string name="msg_added">Added %1$d file(s) from folder</string>
+    <string name="msg_folder_empty">No photos or videos found in that folder</string>
 
     <plurals name="main_summary_files">
         <item quantity="one">%1$d file</item>
@@ -80,8 +89,11 @@
     <string name="pref_reset_timestamps_summary">Zero creation and modification times in MP4 and MOV</string>
     <string name="pref_suffix">File name suffix</string>
     <string name="pref_cat_output">Output</string>
+    <string name="pref_replace_original">Replace originals</string>
+    <string name="pref_replace_original_summary">Overwrite the original files with cleaned ones instead of saving copies</string>
     <string name="pref_folder">Save folder</string>
     <string name="pref_folder_unset">Not set, you will be asked when saving</string>
+    <string name="pref_folder_disabled">Not used, originals are replaced instead</string>
     <string name="pref_cat_appearance">Appearance</string>
     <string name="pref_theme_auto">Follow system</string>
     <string name="pref_cat_stats">Statistics</string>
@@ -105,6 +117,7 @@
     </array>
 
     <string name="about_description">Remove EXIF, XMP, GPS and other hidden metadata from photos and videos. Lossless, offline, no permissions.</string>
+    <string name="about_by">by ryne</string>
     <string name="about_source">Source code</string>
     <string name="about_licenses">Open source licenses</string>
     <string name="about_license_line">Licensed under GPL-3.0-or-later</string>

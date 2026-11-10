@@ -67,16 +67,42 @@ class Cleaner(private val context: Context, private val settings: Settings) {
         }
     }
 
-    fun save(item: FileItem, tree: Uri): Boolean = try {
+    fun save(item: FileItem, tree: Uri?): Boolean = try {
         val file = item.cleaned ?: throw IOException("not cleaned")
-        val parent = DocumentsContract.buildDocumentUriUsingTree(tree, DocumentsContract.getTreeDocumentId(tree))
-        val ext = file.extension.lowercase()
-        val mime = MimeTypeMap.getSingleton().getMimeTypeFromExtension(ext) ?: "application/octet-stream"
-        val target = DocumentsContract.createDocument(resolver, parent, mime, file.name) ?: throw IOException("create failed")
-        resolver.openOutputStream(target)!!.use { out -> file.inputStream().use { it.copyTo(out) } }
+        val target = if (tree == null) item.uri else {
+            val parent = DocumentsContract.buildDocumentUriUsingTree(tree, DocumentsContract.getTreeDocumentId(tree))
+            val ext = file.extension.lowercase()
+            val mime = MimeTypeMap.getSingleton().getMimeTypeFromExtension(ext) ?: "application/octet-stream"
+            DocumentsContract.createDocument(resolver, parent, mime, file.name) ?: throw IOException("create failed")
+        }
+        resolver.openOutputStream(target, "wt")!!.use { out -> file.inputStream().use { it.copyTo(out) } }
         true
     } catch (_: Exception) {
         false
+    }
+
+    fun folderUris(tree: Uri): List<Uri> {
+        val root = DocumentsContract.getTreeDocumentId(tree)
+        val children = DocumentsContract.buildChildDocumentsUriUsingTree(tree, root)
+        val out = ArrayList<Uri>()
+        try {
+            resolver.query(
+                children,
+                arrayOf(DocumentsContract.Document.COLUMN_DOCUMENT_ID, DocumentsContract.Document.COLUMN_MIME_TYPE),
+                null, null, null,
+            )?.use { c ->
+                while (c.moveToNext()) {
+                    val mime = c.getString(1) ?: continue
+                    if (mime == DocumentsContract.Document.MIME_TYPE_DIR) continue
+                    if (mime.startsWith("image/") || mime.startsWith("video/")) {
+                        out += DocumentsContract.buildDocumentUriUsingTree(tree, c.getString(0))
+                    }
+                }
+            }
+        } catch (_: Exception) {
+            return emptyList()
+        }
+        return out
     }
 
     fun shareUri(file: File): Uri = FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", file)

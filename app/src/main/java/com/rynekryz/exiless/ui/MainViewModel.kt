@@ -46,6 +46,18 @@ class MainViewModel(private val app: Application) : AndroidViewModel(app) {
         }
     }
 
+    fun addFolder(tree: Uri) {
+        viewModelScope.launch {
+            val uris = withContext(Dispatchers.IO) { cleaner.folderUris(tree) }
+            if (uris.isNotEmpty()) {
+                add(uris)
+                say(app.getString(R.string.msg_added, uris.size))
+            } else {
+                say(app.getString(R.string.msg_folder_empty))
+            }
+        }
+    }
+
     fun cleanAll() {
         val targets = _items.value.filter { it.format != null && it.cleaned == null && !it.analyzing }
         if (targets.isEmpty()) return say(app.getString(R.string.msg_nothing_clean))
@@ -74,15 +86,17 @@ class MainViewModel(private val app: Application) : AndroidViewModel(app) {
         }
     }
 
-    fun save(tree: Uri, only: FileItem? = null) {
+    fun save(tree: Uri?, only: FileItem? = null) {
         val targets = _items.value.filter { it.cleaned != null && !it.saved && (only == null || it.uri == only.uri) }
         if (targets.isEmpty()) return say(app.getString(R.string.msg_nothing_save))
+        val replacing = tree == null
         viewModelScope.launch(Dispatchers.IO) {
             work.withLock {
                 var ok = 0
                 for (t in targets) if (cleaner.save(t, tree)) { ok++; replace(t.copy(saved = true)) }
-                say(app.getString(R.string.msg_saved, ok))
-                if (ok < targets.size) say(app.getString(R.string.msg_save_failed, targets.size - ok))
+                say(app.getString(if (replacing) R.string.msg_replaced else R.string.msg_saved, ok))
+                val failText = if (replacing) R.string.msg_replace_failed else R.string.msg_save_failed
+                if (ok < targets.size) say(app.getString(failText, targets.size - ok))
             }
         }
     }
