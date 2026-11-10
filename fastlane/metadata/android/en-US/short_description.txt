@@ -1,0 +1,1 @@
+Remove EXIF, GPS and hidden metadata from photos and videos. Offline.

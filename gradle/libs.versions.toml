@@ -1,0 +1,18 @@
+[versions]
+agp = "9.3.2"
+oneui-design = "0.9.20+oneui8"
+oneui-icons = "1.1.0"
+androidx-activity = "1.13.0"
+androidx-exifinterface = "1.4.1"
+coroutines = "1.10.2"
+
+[libraries]
+oneui-design = { module = "io.github.tribalfs:oneui-design", version.ref = "oneui-design" }
+oneui-icons = { module = "io.github.oneuiproject:icons", version.ref = "oneui-icons" }
+androidx-activity-ktx = { module = "androidx.activity:activity-ktx", version.ref = "androidx-activity" }
+androidx-exifinterface = { module = "androidx.exifinterface:exifinterface", version.ref = "androidx-exifinterface" }
+coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
+junit = { module = "junit:junit", version = "4.13.2" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }

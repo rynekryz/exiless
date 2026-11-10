@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory android:title="@string/pref_cat_appearance">
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="theme_auto"
+            android:title="@string/pref_theme_auto" />
+        <dev.oneuiproject.oneui.preference.HorizontalRadioPreference
+            android:defaultValue="light"
+            android:key="theme_mode"
+            app:entries="@array/theme_entries"
+            app:entriesImage="@array/theme_entries_image"
+            app:entryValues="@array/theme_values"
+            app:viewType="image" />
+    </PreferenceCategory>
+
+    <dev.oneuiproject.oneui.preference.InsetPreferenceCategory />
+
+    <PreferenceCategory android:title="@string/pref_cat_cleaning">
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="keep_orientation"
+            android:summary="@string/pref_keep_orientation_summary"
+            android:title="@string/pref_keep_orientation" />
+        <SwitchPreferenceCompat
+            android:defaultValue="true"
+            android:key="reset_timestamps"
+            android:summary="@string/pref_reset_timestamps_summary"
+            android:title="@string/pref_reset_timestamps" />
+        <EditTextPreference
+            android:defaultValue="_clean"
+            android:key="name_suffix"
+            android:title="@string/pref_suffix"
+            app:useSimpleSummaryProvider="true" />
+    </PreferenceCategory>
+
+    <dev.oneuiproject.oneui.preference.InsetPreferenceCategory />
+
+    <PreferenceCategory android:title="@string/pref_cat_output">
+        <Preference
+            android:key="output_folder"
+            android:title="@string/pref_folder" />
+    </PreferenceCategory>
+
+    <dev.oneuiproject.oneui.preference.InsetPreferenceCategory />
+
+    <PreferenceCategory android:title="@string/pref_cat_stats">
+        <Preference
+            android:key="stats"
+            android:selectable="false"
+            android:title="@string/pref_stats" />
+        <Preference
+            android:key="stats_reset"
+            android:title="@string/pref_stats_reset" />
+    </PreferenceCategory>
+
+    <dev.oneuiproject.oneui.preference.InsetPreferenceCategory />
+
+    <PreferenceCategory android:title="@string/pref_cat_info">
+        <Preference
+            android:key="about"
+            android:title="@string/pref_about" />
+    </PreferenceCategory>
+</PreferenceScreen>

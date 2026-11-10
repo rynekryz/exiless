@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/tab_gallery"
+        android:icon="@drawable/ic_oui_image"
+        android:title="@string/tab_gallery" />
+
+    <item
+        android:id="@+id/tab_stats"
+        android:icon="@drawable/ic_oui_analyze_storage"
+        android:title="@string/tab_stats" />
+</menu>

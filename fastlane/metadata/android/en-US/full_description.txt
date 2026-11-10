@@ -1,0 +1,10 @@
+Exiless shows what your photos and videos reveal (location, camera, serial numbers, dates, author) and removes it without re-encoding, so quality stays identical.
+
+• JPEG, PNG, WebP, GIF, HEIC/AVIF and MP4/MOV
+• Batch cleaning and a share target
+• Keeps orientation, colour profiles and animations
+• Save to a folder you choose, or share directly
+• One UI design, dark mode, themed icon
+• No permissions, no network, no tracking
+
+Free and open source (GPL-3.0-or-later).
