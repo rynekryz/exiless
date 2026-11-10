@@ -5,11 +5,16 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.graphics.RectF
+import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.View
 import kotlin.math.max
 
-class StatBars(context: Context) : View(context) {
+class StatBars @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    defStyleAttr: Int = 0,
+) : View(context, attrs, defStyleAttr) {
 
     class Entry(val label: String, val value: Int)
 
