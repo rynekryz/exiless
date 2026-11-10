@@ -20,7 +20,7 @@ class StatBars @JvmOverloads constructor(
 
     private var entries: List<Entry> = emptyList()
 
-    private val accent = colorOf(android.R.attr.colorAccent, 0xFF0671EB.toInt())
+    private val accent = themeColor("colorPrimary", 0xFF0671EB.toInt())
     private val barPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply { color = accent }
     private val emptyPaint = Paint(Paint.ANTI_ALIAS_FLAG).apply {
         color = accent
@@ -61,6 +61,11 @@ class StatBars @JvmOverloads constructor(
             canvas.drawText(e.value.toString(), cx, rect.top - valueH * 0.45f, valuePaint)
             canvas.drawText(e.label, cx, height - labelH * 0.30f, labelPaint)
         }
+    }
+
+    private fun themeColor(name: String, fallback: Int): Int {
+        val id = resources.getIdentifier(name, "attr", context.packageName)
+        return if (id == 0) fallback else colorOf(id, fallback)
     }
 
     private fun colorOf(attr: Int, fallback: Int): Int {
