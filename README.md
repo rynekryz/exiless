@@ -5,6 +5,19 @@
 <p>Lossless, fully offline, no permissions</p>
 </div>
 
+---
+
+## Screenshots
+
+<div align="center">
+<img src="/Screenshots/114958.png" width="24%" />
+<img src="/Screenshots/115003.png" width="24%" />
+<img src="/Screenshots/115021.png" width="24%" />
+<img src="/Screenshots/115138.png" width="24%" />
+</div>
+
+---
+
 ## Building the APK
 
 ### Requirements
