@@ -23,7 +23,9 @@
   <a href="https://github.com/rynekryz/exiless/releases"><img src="assets/badges/getgithub.svg" alt="Get it on GitHub" height="56"/></a>
 </p>
 
----
+<div align="center">
+<picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/rynekryz/rynekryz/main/pixel-art/divider-dots-dark.svg"><img src="https://raw.githubusercontent.com/rynekryz/rynekryz/main/pixel-art/divider-dots-light.svg" width="100%" alt=""></picture>
+</div>
 
 ## Screenshots
 
@@ -34,7 +36,9 @@
 <img src="/Screenshots/115138.png" width="24%" />
 </div>
 
----
+<div align="center">
+<picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/rynekryz/rynekryz/main/pixel-art/divider-dots-dark.svg"><img src="https://raw.githubusercontent.com/rynekryz/rynekryz/main/pixel-art/divider-dots-light.svg" width="100%" alt=""></picture>
+</div>
 
 ## Features
 
@@ -55,7 +59,9 @@
 - No network, no analytics, no permissions, nothing ever leaves your phone
 - etc.
 
----
+<div align="center">
+<picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/rynekryz/rynekryz/main/pixel-art/divider-dots-dark.svg"><img src="https://raw.githubusercontent.com/rynekryz/rynekryz/main/pixel-art/divider-dots-light.svg" width="100%" alt=""></picture>
+</div>
 
 ## Technical Stack
 
@@ -65,7 +71,9 @@
 - **Build:** Gradle (Kotlin DSL) with a version catalog
 - **Minimum SDK:** 26
 
----
+<div align="center">
+<picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/rynekryz/rynekryz/main/pixel-art/divider-dots-dark.svg"><img src="https://raw.githubusercontent.com/rynekryz/rynekryz/main/pixel-art/divider-dots-light.svg" width="100%" alt=""></picture>
+</div>
 
 ## Building
 
@@ -95,7 +103,9 @@ APK: `app/build/outputs/apk-named/debug/`, four builds (arm64, armv7, x86_64, un
 
 Tests: `./gradlew :app:testDebugUnitTest`
 
----
+<div align="center">
+<picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/rynekryz/rynekryz/main/pixel-art/divider-dots-dark.svg"><img src="https://raw.githubusercontent.com/rynekryz/rynekryz/main/pixel-art/divider-dots-light.svg" width="100%" alt=""></picture>
+</div>
 
 ## Project Structure
 
@@ -109,7 +119,9 @@ Exiless/
 └── Screenshots/
 ```
 
----
+<div align="center">
+<picture><source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/rynekryz/rynekryz/main/pixel-art/divider-dots-dark.svg"><img src="https://raw.githubusercontent.com/rynekryz/rynekryz/main/pixel-art/divider-dots-light.svg" width="100%" alt=""></picture>
+</div>
 
 ## License
 
